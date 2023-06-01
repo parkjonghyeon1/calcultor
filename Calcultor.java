@@ -1,0 +1,231 @@
+import java.awt.*;
+import javax.swing.*;
+
+public class Calcultor extends JFrame {
+
+	JTextField display;
+	JLabel history;
+	JPanel panel;
+	JButton button;
+	double operand1, operand2, answer;
+	String operator;  
+	Calcultor(){
+		this.setBounds(100, 100, 300, 500);
+		this.setTitle("계산기");
+		this.setLayout(new BorderLayout());
+		display = new JTextField(30);
+		display.setText("0");
+		display.setFont(new Font("궁서체", Font.BOLD, 35));
+		display.setHorizontalAlignment( SwingConstants.RIGHT );
+		
+		this.add(display, BorderLayout.NORTH);
+		history = new JLabel("--");
+		this.add(history, BorderLayout.SOUTH);
+		panel = new JPanel();
+		panel.setLayout(new GridLayout(6,4));
+		button = new JButton("%");
+		button.addActionListener(e -> {
+			double d = Double.parseDouble(display.getText());
+			double result = d * (d/100);
+			if (result % 1 == 0) {
+				display.setText(String.format("%.0f", result));
+				} else {
+					display.setText(String.valueOf(result));
+				}
+		});
+		
+		panel.add(button);
+		button = new JButton("CE");
+		button.addActionListener(e->{
+			display.setText( "0" );
+		});
+		panel.add(button);
+		button = new JButton("C");
+		button.addActionListener(e->{
+			display.setText( "0" );
+		});
+		panel.add(button);
+		button = new JButton("<-");
+		button.addActionListener(e->{
+			display.setText( display.getText().substring(0, display.getText().length()-1 ) );
+		});
+		panel.add(button);
+		button = new JButton("1/x");
+		button.addActionListener(e->{
+			double d = Double.parseDouble(display.getText());
+			display.setText( 1.0 / d + "" );
+		});
+		panel.add(button);
+		button = new JButton("x^2");
+		button.addActionListener(e->{
+			double d = Double.parseDouble(display.getText());
+			double result = d * d;
+			
+			if (result % 1 == 0) {
+				display.setText(String.format("%.0f", result));
+				} else {
+					display.setText(String.valueOf(result));
+				}
+		});
+		panel.add(button);
+		button = new JButton("Sqrt");
+		button.addActionListener(e->{
+			double d = Double.parseDouble(display.getText());
+			double result = Math.sqrt(d);
+			if (result % 1 == 0) {
+				display.setText(String.format("%.0f", result));
+				} else {
+					display.setText(String.valueOf(result));
+				}
+		});
+		panel.add(button);
+		button = new JButton("/");
+		button.addActionListener(e->{
+			operand1 = Double.parseDouble( display.getText() );
+			display.setText("0");
+			operator = "/";
+		});
+		panel.add(button);
+		button = new JButton("7");
+		button.addActionListener(e->{
+			if( display.getText().equals("0") ) display.setText( "7"); 
+			//디스플레이에 0만 있으면 0을 없애고 7을 입력
+			else display.setText( display.getText() + "7");
+			//디스플레이에 0이외의 숫자가있으면 그 숫자 뒤에 입력
+		});
+		panel.add(button);
+		button = new JButton("8");
+		button.addActionListener(e->{
+			if( display.getText().equals("0") ) display.setText( "8");
+			else display.setText( display.getText() + "8");
+		});
+		panel.add(button);
+		button = new JButton("9");
+		button.addActionListener(e->{
+			if( display.getText().equals("0") ) display.setText( "9");
+			else display.setText( display.getText() + "9");
+		});
+		panel.add(button);
+		button = new JButton("*");
+		button.addActionListener(e->{
+			operand1 = Double.parseDouble( display.getText() );
+			display.setText("0");
+			operator = "*";
+		});
+		panel.add(button);
+		button = new JButton("4");
+		button.addActionListener(e->{
+			if( display.getText().equals("0") ) display.setText( "4");
+			else display.setText( display.getText() + "4");
+		});
+		panel.add(button);
+		button = new JButton("5");
+		button.addActionListener(e->{
+			if( display.getText().equals("0") ) display.setText( "5");
+			else display.setText( display.getText() + "5");
+		});
+		panel.add(button);
+		button = new JButton("6");
+		button.addActionListener(e->{
+			if( display.getText().equals("0") ) display.setText( "6");
+			else display.setText( display.getText() + "6");
+		});
+		panel.add(button);
+		button = new JButton("-");
+		button.addActionListener(e->{
+			operand1 = Double.parseDouble( display.getText() );
+			display.setText("0");
+			operator = "-";
+		});
+		panel.add(button);
+		button = new JButton("1");
+		button.addActionListener(e->{
+			if( display.getText().equals("0") ) display.setText( "1");
+			else display.setText( display.getText() + "1");
+		});
+		panel.add(button);
+		button = new JButton("2");
+		button.addActionListener(e->{
+			if( display.getText().equals("0") ) display.setText( "2");
+			else display.setText( display.getText() + "2");
+		});
+		panel.add(button);
+		button = new JButton("3");
+		button.addActionListener(e->{
+			if( display.getText().equals("0") ) display.setText( "3");
+			else display.setText( display.getText() + "3");
+		});
+		panel.add(button);
+		button = new JButton("+");
+		button.addActionListener(e->{
+			operand1 = Double.parseDouble( display.getText() );
+			display.setText("0");
+			operator = "+";
+		}); // 디스플레이에 나와있는 숫자를 +에 저장하고 =누르면 연산 결과 나옴
+		panel.add(button);
+		button = new JButton("+/-");
+		button.addActionListener(e->{
+			if( !display.getText().equals("0") ) {
+				if( display.getText().contains("-") ) {
+					display.setText( display.getText().substring(1) );				
+				} else {
+					display.setText( "-" + display.getText() );				
+				}
+			}
+		});
+		panel.add(button);
+		button = new JButton("0");
+		button.addActionListener(e -> {
+			if( !display.getText().equals("0") ) { 
+				display.setText( display.getText() + "0");
+			}
+		});
+		panel.add(button);
+		button = new JButton(".");
+		button.addActionListener(e->{
+			if( !display.getText().contains(".") ) {
+				display.setText( display.getText() + ".");
+			}
+		});
+		panel.add(button);
+		button = new JButton("=");
+		button.addActionListener(e-> {
+			operand2 = Double.parseDouble( display.getText() );
+			switch( operator ) {
+			    case "+":
+				     answer = operand1 + operand2;
+				     break;
+			    case "-":
+				     answer = operand1 - operand2;
+				     break;
+			    case "*":
+			    	 answer = operand1 * operand2;
+			    	 break;
+			    case "/":
+			    	 answer = operand1 / operand2;
+			    	 break;
+			    			         
+		        default:
+		    }
+			
+			if(answer % 1 == 0) {
+				display.setText(String.format("%.0f", answer));
+			}
+			else {
+				display.setText(String.valueOf(answer));
+			}
+		});
+		panel.add(button);	
+
+		this.add(panel, BorderLayout.CENTER); 
+		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		this.setVisible(true);
+	}
+	
+	public static void main(String[] args) {
+		
+		new Calcultor();
+
+	}
+
+}
